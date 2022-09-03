@@ -3,6 +3,7 @@ class ArrayListe:
     def __init__(self, startkapasitet = 20):
         self.array = np.zeros(startkapasitet, dtype=object)
         self.lengde = 0
+        self.startIndex = 0
 
     #gir resultatet av len funksjonen
     def __len__(self):
@@ -26,6 +27,15 @@ class ArrayListe:
             self.utvid()
         self.array[self.lengde] = element
         self.lengde += 1
+        
+
+    def append_left(self, element):
+        if self.lengde >= len(self.array):
+            self.utivd()
+        self.array[self.lengde] = element
+        self.startIndex += 1
+        self.lengde += 1
+
 
     # Legger inn det oppgitte elementet på oppgitt indeks, og forskyver alle elementer som ligger
     # etterpå ett hakk bak
@@ -125,22 +135,16 @@ class ArrayListIterator:
         resultat = self.lista.get(self.nv_element)
         self.nv_element += 1
         return resultat
+
+
 if __name__ == "__main__":
+    
     liste = ArrayListe(5)
+    liste.append(1)
+    liste.append(2)
+    liste.append(3)
+    liste.append(4)
+    liste.append_left(5)
     liste.append(6)
-    liste.append(9)
-    liste.append(-2)
-    liste.insert(0, -5)
-    liste.insert(3, -8)
-    liste.append(5)
-    liste.append(7)
-    print(liste.get(2))
-    print(liste.search(5))
-    print()
-    for element in liste:
-        print(element)
-    print()
-    liste.remove(9)
-    liste.delete(1)
-    for element in liste:
-        print(element)
+    print(liste.array)
+  
