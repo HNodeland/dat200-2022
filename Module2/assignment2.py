@@ -62,13 +62,26 @@ class ArrayList:
         self.array[self.buffer_left + self.length -1] = 0
         self.length -= 1
 
-    #Kjøretid O(1) best case, get på første element i lista
+    #Kjøretid O(1) best case, rett på første element i lista
     #Kjøretid O(n) worst case, når vi leter gjennom hele arrayet 
     def get(self, index):
         print(self.array[self.buffer_left + index])
 
-    def insert(self, index, element):
+    #Kjøretid O(1) best case, rett på første element i lista
+    #Kjøretid O(n) worst case, når vi leter gjennom hele arrayet 
+    def replace(self, index, element):
         self.array[self.buffer_left + index] = element
+    
+    #Kjøretid O(1) best case, elementet plasseres på slutten av arrayet 
+    #Kjøretid O(n) worst case, på starten av arrayet, og alle elementene må flyttes
+    def insert(self, index, element):
+        if self.buffer_left + self.length >= len(self.array):
+            self.expand_right()
+        for i in range(self.length -1, index -1, -1):
+            self.array[self.buffer_left + i + 1] = self.array[self.buffer_left + i]
+        self.array[self.buffer_left + index] = element
+        self.length += 1
+        
 
 if __name__ == "__main__":
     list = ArrayList(4)
@@ -79,12 +92,12 @@ if __name__ == "__main__":
     list.append_left(4)
     
     print(list.array)
-    list.pop_right()
+    list.insert(0, 5)
+    list.insert(0, 6)
+    list.insert(0, 7)
+
     print(list.array)
-    list.insert(0, 1)
-    print(list.array)
-    list.get(0)
-    
+
     
 
     
