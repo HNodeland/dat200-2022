@@ -7,7 +7,6 @@ class ArrayList:
         self.array = np.zeros(startcapasity, dtype=object)
         self.length = 0
         self.buffer_left = int(startcapasity/2)
-        self.size = startcapasity
 
     #Kjøretid O(1)
     def __len__(self):
@@ -86,18 +85,12 @@ class ArrayList:
 if __name__ == "__main__":
     list = ArrayList(4)
     
+    list.append_right(1)
+    list.append_right(2)
+    list.append_right(3)
+    list.append_right(4)
     list.append_left(1)
     list.append_left(2)
     list.append_left(3)
-    list.append_left(4)
-    
     print(list.array)
-    list.insert(0, 5)
-    list.insert(0, 6)
-    list.insert(0, 7)
-
-    print(list.array)
-
-    
-
     
