@@ -1,21 +1,34 @@
-#Hanois tårn. Målet er å kunne løse puslespillet med en rekursiv algoritme.
-#Denne varianten skal skrive ut tilstanden til alle 3 tårnene etter hvert flytt.
-#
+from tracemalloc import start
 
-class Tower:
-    def __init__(self, n):
-        self.leftTower = []
-        for i in range(n):
-            self.leftTower.append(i+1)
-        self.middleTower = []
-        self.rightTower = []
 
+class Towers:
+    def __init__(self, disks):
+        self.disks = disks
+        self.towers = [[],[],[]]
+        self.towers[0] = [i for i in range(self.disks, 0, -1)]
+        self.towers[1] = []
+        self.towers[2] = []
+
+    def move(self, startingTower, targetTower):
+        self.towers[targetTower].append(self.towers[startingTower][-1])
+        self.towers[startingTower].pop()
+    
+    def solve(towers, n, startingTower, targetTower, placeholderTower):
+        if n > 0:
+            towers.solve(n-1, startingTower, placeholderTower, targetTower)
+            towers.move(startingTower, targetTower)
+            towers.printTowers()
+            towers.solve(n-1, placeholderTower, targetTower, startingTower)
+    
     def printTowers(self):
-        print(self.leftTower)
-        print(self.middleTower)
-        print(self.rightTower)
+        print("")
+        print(self.towers[0])
+        print(self.towers[1])
+        print(self.towers[2])
+
 
 if __name__ == "__main__":
-    t = Tower(3)
+    t = Towers(4)
     t.printTowers()
-
+    t.solve(t.disks, 0, 2, 1)
+    
